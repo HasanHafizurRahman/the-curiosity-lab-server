@@ -1,9 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import userModel, { IUser } from "../models/user.model";
+import userModel from "../models/user.model";
 import ErrorHandler from "../utils/ErrorHandler";
 import { CatchAsyncError } from "../middleware/catchAsyncError";
 import jwt, { Secret } from "jsonwebtoken";
 require("dotenv").config();
+import ejs from "ejs";
+import path from "path";
 
 // register user
 interface IRegistrationBody {
@@ -27,6 +29,15 @@ export const registrationUser = CatchAsyncError(
         password,
       };
       const activationToken = createActivationToken(user);
+      const activationCode = activationToken.activationCode;
+
+      const data = { user: { name: user.name }, activationCode };
+      const html = await ejs.renderFile(
+        path.join(__dirname, "../mails/activation-mail.ejs"),
+        data
+      );
+      try {
+      } catch (error) {}
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -39,7 +50,7 @@ interface IActivationToken {
   activationCode: string;
 }
 
-export const createActivationToken = (user: IUser): IActivationToken => {
+export const createActivationToken = (user: any): IActivationToken => {
   const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
 
   const token = jwt.sign(

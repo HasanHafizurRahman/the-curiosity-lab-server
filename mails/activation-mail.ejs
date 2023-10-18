@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Activation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .logo img {
+        width: 150px;
+        height: auto;
+      }
+
+      .message {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .activation-link {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #007bff;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img
+          src="https://i.ibb.co/W5ppgcT/Colorful-Artificial-Intelligence-Logo.png"
+          alt="The Curiosity Lab Logo"
+        />
+      </div>
+      <div class="message">
+        <h2>Welcome to The Curiosity Lab!</h2>
+        <p>
+          Thank you for joining us. To activate your account, please click the
+          button below:
+        </p>
+        <a class="activation-link" href="<%= activationLink %>"
+          >Activate Your Account</a
+        >
+      </div>
+      <p>
+        If you didn't create an account with The Curiosity Lab, please ignore
+        this email.
+      </p>
+    </div>
+  </body>
+</html>
