@@ -1,11 +1,13 @@
+require("dotenv").config();
 import { Request, Response, NextFunction } from "express";
 import userModel from "../models/user.model";
 import ErrorHandler from "../utils/ErrorHandler";
 import { CatchAsyncError } from "../middleware/catchAsyncError";
 import jwt, { Secret } from "jsonwebtoken";
-require("dotenv").config();
+
 import ejs from "ejs";
 import path from "path";
+import sendMail from "../utils/sendMail";
 
 // register user
 interface IRegistrationBody {
@@ -37,7 +39,20 @@ export const registrationUser = CatchAsyncError(
         data
       );
       try {
-      } catch (error) {}
+        await sendMail({
+          email: user.email,
+          subject: "Activate Your Account",
+          template: "activation-mail.ejs",
+          data,
+        });
+        res.status(201).json({
+          success: true,
+          message: `Please check your email: ${user.email} to activate your account!`,
+          activationToken: activationToken.token,
+        });
+      } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+      }
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
