@@ -43,6 +43,12 @@
         text-decoration: none;
         border-radius: 5px;
       }
+
+      .activation-code {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -56,12 +62,14 @@
       <div class="message">
         <h2>Welcome to The Curiosity Lab!</h2>
         <p>
-          Thank you for joining us. To activate your account, please click the
-          button below:
+          Thank you for joining us. To activate your account, please use the
+          following activation code:
         </p>
-        <a class="activation-link" href="<%= activationLink %>"
-          >Activate Your Account</a
-        >
+        <div class="activation-code"><%= activationCode %></div>
+        <p>
+          Enter this code in the activation section of your account to complete
+          the registration process.
+        </p>
       </div>
       <p>
         If you didn't create an account with The Curiosity Lab, please ignore
