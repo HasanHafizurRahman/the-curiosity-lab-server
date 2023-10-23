@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 require("dotenv").config();
 
-const dburl: string = process.env.DB_URL || "";
+const dburl: string =
+  process.env.DB_URL || "mongodb://localhost:27017/curiositylab";
 
 const connectDB = async () => {
   try {
