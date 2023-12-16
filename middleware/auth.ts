@@ -4,9 +4,10 @@ import ErrorHandler from "../utils/ErrorHandler";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redis } from "../utils/redis";
 
+// Authenticated User
 export const isAuthenticated = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
-    const access_token = req.cookies.access_token;
+    const access_token = req.cookies.access_token as string;
     if (!access_token) {
       return next(
         new ErrorHandler("Please login to access this resource", 400)
@@ -17,6 +18,7 @@ export const isAuthenticated = CatchAsyncError(
       access_token,
       process.env.ACCESS_TOKEN as string
     ) as JwtPayload;
+    console.log("decodedResult", decoded);
     if (!decoded) {
       return next(new ErrorHandler("Access token is not valid", 400));
     }
@@ -30,3 +32,18 @@ export const isAuthenticated = CatchAsyncError(
     next();
   }
 );
+
+// Validate user role
+export const authorizeRoles = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!roles.includes(req.user?.role || "")) {
+      return next(
+        new ErrorHandler(
+          `Role: ${req.user?.role} is not allowed to access this resource`,
+          403
+        )
+      );
+    }
+    next();
+  };
+};

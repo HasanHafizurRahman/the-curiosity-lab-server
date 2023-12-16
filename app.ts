@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 import { ErrorMiddleware } from "./middleware/error";
 import userRouter from "./routes/user.route";
+import { isAuthenticated } from "./middleware/auth";
 
 // body parser
 app.use(express.json({ limit: "50mb" }));
@@ -38,4 +39,5 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(err);
 });
 
+// Error handling middleware
 app.use(ErrorMiddleware);
